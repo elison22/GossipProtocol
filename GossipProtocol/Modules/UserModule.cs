@@ -48,24 +48,9 @@ namespace GossipProtocol.Modules
                     selected.UserName == this.Context.CurrentUser.UserName)
                     return Response.AsRedirect("/account");
 
-                // if the user isn't connected to foursquare, display the basic page
-                if (selected.FS_Token == null || selected.FS_Token.Trim() == "")
-                    return View["user_basic", new ViewModel(this.Context, selected)];
+                // ==== something
 
-                // otherwise display the page with a checkin
-                CheckinsModel checkins = new CheckinsModel(); // FoursquareAccess.get().getCheckins(selected.FS_Token);
-
-                checkins.user = selected;
-                //checkins.items.Add(new CheckinModel
-                //{
-                //    id = "This is the ID",
-                //    createdAt = ConvertToUnixTimestamp(DateTime.Now.AddDays(-4).AddHours(11).AddMinutes(20)),
-                //    timeZoneOffset = -600,
-                //    venue = "Smiths",
-                //    type = "Shopping"
-                //});
-
-                return View["user_adv", new ViewModel(this.Context, checkins)];
+                return View["user_adv"/*, new ViewModel(this.Context, checkins)*/];
             };
         }
 

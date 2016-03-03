@@ -6,7 +6,7 @@ using System.Web;
 
 namespace GossipProtocol.Gossip.Message
 {
-    public class RumorMessage
+    public class RumorMessage : IComparable<RumorMessage>
     {
         // For Json to be happy
         public OneRumor Rumor { get; set; }
@@ -15,8 +15,9 @@ namespace GossipProtocol.Gossip.Message
         // Indirectly for Json as well
         public class OneRumor
         {
-            private MessageId fullId = new MessageId();
+            public MessageId fullId = new MessageId();
 
+            //For Json to be happy
             public string MessageId
             {
                 get
@@ -32,7 +33,7 @@ namespace GossipProtocol.Gossip.Message
             public string Text { get; set; }
         }
         
-        public string toJson()
+        public string ToJson()
         {
             StringBuilder builder = new StringBuilder();
             builder.Append("{\"Rumor\" : {\"MessageID\": \"");
@@ -47,7 +48,16 @@ namespace GossipProtocol.Gossip.Message
 
             return builder.ToString();
         }
-        
+
+        public int CompareTo(RumorMessage other)
+        {
+            if (EndPoint == other.EndPoint &&
+                Rumor.MessageId == other.Rumor.MessageId &&
+                Rumor.Originator == other.Rumor.Originator &&
+                Rumor.Text == other.Rumor.Text)
+                return 0;
+            else return -1;
+        }
     }
 
     /*

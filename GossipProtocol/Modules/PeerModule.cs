@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Nancy.ModelBinding;
+using GossipProtocol.Gossip;
 
 namespace GossipProtocol.Modules
 {
@@ -19,20 +21,32 @@ namespace GossipProtocol.Modules
             Post["/peer/add"] = _ =>
             {
                 User user = getCurUser();
+                /*
+                bind to the form fields
+                create a peer
+                add it to the current user
+                */
+                PeerParams peerParams = this.Bind<PeerParams>();
 
-                return null;
+                Peer peer = new Peer
+                {
+                    Endpoint = peerParams.Endpoint
+                };
+
+                user.Neighbors.Add(peer);
+
+                return Response.AsRedirect("/chat");
             };
 
+            // TODO: Finish this one!!!!
             Post["/peer/delete"] = _ =>
             {
                 User user = getCurUser();
-                user.neighbors.Remove("FILL IN THE WAY TO REMOVE NEIGHBORS");
+                //user.neighbors.Remove("FILL IN THE WAY TO REMOVE NEIGHBORS");
 
-                return View["chat"/*chat data*/];
+                return Response.AsRedirect("/chat");
             };
-
-
-
+            
         }
 
         private long ConvertToUnixTimestamp(DateTime date)
@@ -41,6 +55,10 @@ namespace GossipProtocol.Modules
             TimeSpan diff = date.ToUniversalTime() - origin;
             return (long)Math.Floor(diff.TotalSeconds);
         }
-
+        
+        private class PeerParams
+        {
+            public string Endpoint { get; set; }
+        }
     }
 }

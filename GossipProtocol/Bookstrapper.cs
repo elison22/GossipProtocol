@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using GossipProtocol.Network;
+using GossipProtocol.Gossip;
 
 namespace GossipProtocol
 {

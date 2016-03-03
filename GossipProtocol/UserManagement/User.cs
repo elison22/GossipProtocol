@@ -12,6 +12,9 @@ namespace GossipProtocol.UserManagement
     {
         public User()
         {
+            Neighbors = new List<Peer>();
+            Messages = new List<RumorMessage>();
+            SentState = new State();
             resetRemainingCycles();
         }
 
@@ -23,9 +26,9 @@ namespace GossipProtocol.UserManagement
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Guid Id { get; set; }                        // this will form the endpoint, which will be like p5.byubrandt.com/chat/{Id}
-        public List<Peer> neighbors { get; set; }           // This is really a list of endpoints
-        public List<RumorMessage> messages { get; set; }    // All the messages received including non-neighbors
-        public State sendState { get; set; }
+        public List<Peer> Neighbors { get; set; }           // This is really a list of endpoints
+        public List<RumorMessage> Messages { get; set; }    // All the messages received including non-neighbors
+        public State SentState { get; set; }
         public int remainingCycles { get; set; }
         
         // To make Nancy happy

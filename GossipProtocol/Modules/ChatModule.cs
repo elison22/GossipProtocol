@@ -1,5 +1,7 @@
-﻿using GossipProtocol.UserManagement;
+﻿using GossipProtocol.Gossip.Message;
+using GossipProtocol.UserManagement;
 using Nancy;
+using Nancy.ModelBinding;
 using Nancy.Security;
 using System;
 using System.Collections.Generic;
@@ -21,14 +23,14 @@ namespace GossipProtocol.Modules
 
                 // Check if the user has a peer yet
                 // if not, go to the add a peer page
-                if (user.neighbors.Count == 0)
+                if (user.Neighbors.Count == 0)
                     return Response.AsRedirect("/peer/add");
 
                 // if so, get the messages for that user and display them
+                List<RumorMessage> messages = user.Messages;
                 // TODO: do this once all of the model code is implemented
-
-
-                return View["chat"/*MODEL DATA (LOTS OF MODEL DATA)*/];
+                
+                return View["chat", makeView(messages)];
             };
 
             Post["/chat/new"] = _ =>
@@ -36,17 +38,25 @@ namespace GossipProtocol.Modules
                 // get the current user
                 User user = getCurUser();
 
-                // make a new peer object
-                // add it to the list of peers
+                // Check if the user has a peer yet
+                // if not, go to the add a peer page
+                if (user.Neighbors.Count == 0)
+                    return Response.AsRedirect("/peer/add");
+
+                // add this message to the current list of messages
+                // bind the form elements
+                MessageParams messageParams = this.Bind<MessageParams>();
 
                 // TODO: implement this once the model code is completed
 
-                return View["chat"/*MODEL DATA (LOTS OF MODEL DATA)*/];
+                return Response.AsRedirect("/chat");
             };
-
-
 
         }
 
+        private class MessageParams
+        {
+            public string Text { get; set; }
+        }
     }
 }
