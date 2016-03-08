@@ -1,5 +1,4 @@
-﻿using Nancy;
-using Nancy.ModelBinding;
+﻿using Nancy.ModelBinding;
 using Nancy.Authentication.Forms;
 using GossipProtocol.Models;
 using GossipProtocol.UserManagement;

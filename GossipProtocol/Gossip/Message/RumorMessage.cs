@@ -8,6 +8,18 @@ namespace GossipProtocol.Gossip.Message
 {
     public class RumorMessage : IComparable<RumorMessage>
     {
+        public RumorMessage() { }
+        public RumorMessage(string messageId, string originator, string text, string endpoint)
+        {
+            EndPoint = endpoint;
+            Rumor = new OneRumor
+            {
+                MessageId = messageId,
+                Originator = originator,
+                Text = text
+            };
+        }
+
         // For Json to be happy
         public OneRumor Rumor { get; set; }
         public string EndPoint { get; set; }

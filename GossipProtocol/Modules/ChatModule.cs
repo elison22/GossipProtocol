@@ -47,6 +47,7 @@ namespace GossipProtocol.Modules
                 // bind the form elements
                 MessageParams messageParams = this.Bind<MessageParams>();
 
+
                 // TODO: implement this once the model code is completed
 
                 return Response.AsRedirect("/chat");

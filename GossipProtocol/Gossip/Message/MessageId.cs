@@ -5,7 +5,7 @@ using System.Web;
 
 namespace GossipProtocol.Gossip.Message
 {
-    public class MessageId
+    public class MessageId : IComparable<MessageId>
     {
         public MessageId(){}
         public MessageId(string origin, string sequence)
@@ -29,6 +29,11 @@ namespace GossipProtocol.Gossip.Message
                 origin = Guid.Parse(splitVals[0]);
                 sequence = int.Parse(splitVals[1]);
             }
+        }
+
+        public int CompareTo(MessageId other)
+        {
+            return id.CompareTo(other.id);
         }
     }
 }
