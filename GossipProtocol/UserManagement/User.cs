@@ -13,22 +13,38 @@ namespace GossipProtocol.UserManagement
         public User()
         {
             Neighbors = new List<Peer>();
-            SentState = new State();
-            resetRemainingCycles();
+            MessageState = new State();
+            Id = Guid.NewGuid();
+            defaultStartingCycles = 180;
+            ResetRemainingCycles();
         }
 
         // Inner versions of the vars below that make Nancy happy
         private List<string> UserClaims = new List<string>();
         private string Username { get; set; }
-        private int defaultStartingCycles = 180;
+        private int defaultStartingCycles;
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Guid Id { get; set; }                        // this will form the endpoint, which will be like p5.byubrandt.com/chat/{Id}
         public List<Peer> Neighbors { get; set; }           // This is really a list of endpoints
-        public State SentState { get; set; }
-        public int remainingCycles { get; set; }
-        
+        public State MessageState { get; set; }
+        public int RemainingCycles { get; set; }
+        public string ShortId
+        {
+            get
+            {
+                return Id.ToString().Substring(24, 12);
+            }
+        }
+        public string Endpoint
+        {
+            get
+            {
+                return "http://p5.byubrandt.com/chat/" + ShortId;
+            }
+        }
+
         // To make Nancy happy
         public IEnumerable<string> Claims
         {
@@ -53,14 +69,24 @@ namespace GossipProtocol.UserManagement
             // TODO: verify equality on the other information added here
             else return 0;
         }
-        public void resetRemainingCycles()
+        public void ResetRemainingCycles()
         {
-            remainingCycles = defaultStartingCycles;
+            RemainingCycles = defaultStartingCycles;
         }
-        public bool decCycles()
+        public bool DecCycles()
         {
-            remainingCycles--;
-            return remainingCycles > 0;   // are there still remaining cycles?
+            RemainingCycles--;
+            return RemainingCycles > 0;   // are there still remaining cycles?
         }
+        public void AddPeer(string Endpoint)
+        {
+            Peer newPeer = new Peer
+            {
+                Endpoint = Endpoint
+            };
+            Neighbors.Add(newPeer);
+            MessageState.SentMessages.Add(newPeer, new List<MessageId>());
+        }
+
     }
 }

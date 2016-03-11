@@ -10,16 +10,16 @@ namespace GossipProtocol.Gossip
     {
         public State()
         {
-            NewestSentMessages = new Dictionary<Peer, List<MessageId>>();
+            SentMessages = new Dictionary<Peer, List<MessageId>>();
             ReceivedMessages = new List<RumorMessage>();
-            rand = new Random();
-            CurSequence = 0;
+            Rand = new Random();
+            NextSequence = 0;
         }
 
-        public Dictionary<Peer, List<MessageId>> NewestSentMessages { get; set; }     // endpoint to id
+        public Dictionary<Peer, List<MessageId>> SentMessages { get; set; }     // endpoint to id
         public List<RumorMessage> ReceivedMessages { get; set; }
-        public int CurSequence { get; set; }
-        private Random rand;
+        public int NextSequence { get; set; }
+        private Random Rand;
 
 
         public void AddMessage(RumorMessage message)
@@ -38,8 +38,18 @@ namespace GossipProtocol.Gossip
 
         public void AddMyMessage(Guid id, string originator, string text, string endpoint)
         {
-            AddMessage(id, CurSequence, originator, text, endpoint);
-            CurSequence++;
+            AddMessage(id, NextSequence, originator, text, endpoint);
+            NextSequence++;
+        }
+
+        public void AddSentTo(Peer peer, RumorMessage message)
+        {
+            SentMessages[peer].Add(message.Rumor.FullId);
+        }
+
+        public void AddSentTo(string peer, RumorMessage message)
+        {
+            SentMessages[new Peer { Endpoint = peer }].Add(message.Rumor.FullId);
         }
 
         
@@ -49,19 +59,19 @@ namespace GossipProtocol.Gossip
 
             List<MessageId> receivedIDs = (
                 from rm in ReceivedMessages
-                select rm.Rumor.fullId).ToList();
+                select rm.Rumor.FullId).ToList();
 
-            List<Guid> distinctOrigins = (
+            List<string> distinctOrigins = (
                 from rid in receivedIDs
                 select rid.origin).Distinct().ToList();
 
-            foreach(Guid orig in distinctOrigins)
+            foreach(string orig in distinctOrigins)
             {
                 List<MessageId> groupedMessages = (
                     from rm in ReceivedMessages
-                    where rm.Rumor.fullId.origin == orig
-                    orderby rm.Rumor.fullId.sequence descending
-                    select rm.Rumor.fullId).ToList();
+                    where rm.Rumor.FullId.origin == orig
+                    orderby rm.Rumor.FullId.sequence descending
+                    select rm.Rumor.FullId).ToList();
 
                 want.WantList.Add(groupedMessages[0]);
             }
@@ -71,31 +81,53 @@ namespace GossipProtocol.Gossip
 
         public RumorMessage GetRandMessage(Peer peer)
         {
-            List<MessageId> sentSoFarToEndpoint = NewestSentMessages[peer];
+            List<MessageId> sentSoFarToEndpoint = SentMessages[peer];
 
-            List<Guid> sentSoFarOrigins = (from ssfte in sentSoFarToEndpoint select ssfte.origin).ToList();
+            List<string> sentSoFarOrigins = (from ssfte in sentSoFarToEndpoint select ssfte.origin).ToList();
 
             List<RumorMessage> unsentMessages = (
                 from rm in ReceivedMessages
-                where !sentSoFarToEndpoint.Contains(rm.Rumor.fullId)
+                where !sentSoFarToEndpoint.Contains(rm.Rumor.FullId)
                 select rm).ToList();
 
-            List<RumorMessage> newerReceived = (
+            List<IGrouping<string, RumorMessage>> newerReceived = (
                 from um in unsentMessages
-                where !sentSoFarOrigins.Contains(um.Rumor.fullId.origin) ||
-                um.Rumor.fullId.sequence > (
+                where !sentSoFarOrigins.Contains(um.Rumor.FullId.origin) ||
+                um.Rumor.FullId.sequence > (
                     from ssf in sentSoFarToEndpoint
-                    where ssf.origin == um.Rumor.fullId.origin
+                    where ssf.origin == um.Rumor.FullId.origin
                     orderby ssf.sequence descending
                     select ssf).FirstOrDefault().sequence
-                select um).ToList();
+                group um by um.Rumor.Originator).ToList();
+            
 
             if (newerReceived.Count == 0)
                 return null;
-            
-            RumorMessage toReturn = newerReceived[new Random().Next(newerReceived.Count)];
-                        
-            return toReturn;
+
+            IGrouping<string, RumorMessage> oneGroup = newerReceived[Rand.Next(newerReceived.Count)];
+
+            return (
+                from r in oneGroup
+                orderby r.Rumor.FullId.sequence ascending
+                select r).FirstOrDefault();
+        }
+
+        public List<RumorMessage> GetMissingRumors(List<MessageId> fromWant)
+        {
+            List<string> fromWantOrigins = (
+                from fw in fromWant
+                select fw.origin).ToList();
+
+            List<RumorMessage> missingRumors = (
+                from rm in ReceivedMessages
+                where !fromWantOrigins.Contains(rm.Rumor.FullId.origin) ||
+                rm.Rumor.FullId.sequence > (
+                    from fw in fromWant
+                    where fw.id == rm.Rumor.FullId.id
+                    select fw).FirstOrDefault().sequence
+                select rm).ToList();
+
+            return missingRumors;
         }
 
     }

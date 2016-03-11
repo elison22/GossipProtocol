@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using GossipProtocol.Writing;
 using Newtonsoft.Json.Linq;
 using GossipProtocol.Gossip.Message;
+using GossipProtocol.Gossip;
 
 namespace GossipProtocol
 {
@@ -39,7 +40,7 @@ namespace GossipProtocol
             //Write.WriteLine("\n\n");
             //Write.WriteLine(JsonConvert.SerializeObject(wm));
 
-
+            //GossipLoop.TestRequest("http://localhost:2000/login", wm);
 
         }
     }

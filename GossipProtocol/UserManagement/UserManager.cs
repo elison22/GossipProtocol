@@ -71,6 +71,14 @@ namespace GossipProtocol.UserManagement
             return match;
         }
 
+        public User getShortUser(string ShortId)
+        {
+            return (
+                from u in users
+                where u.ShortId == ShortId
+                select u).FirstOrDefault();
+        }
+
         public List<User> getUsers()
         {
             return users;

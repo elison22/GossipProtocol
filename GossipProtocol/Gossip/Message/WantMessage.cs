@@ -6,8 +6,12 @@ using System.Web;
 
 namespace GossipProtocol.Gossip.Message
 {
-    public class WantMessage
+    public class WantMessage : IGossipMessage
     {
+        public WantMessage()
+        {
+            WantList = new List<MessageId>();
+        }
         public List<MessageId> WantList { get; set; }
 
         // For JSon stuff to be happy.
@@ -49,7 +53,7 @@ namespace GossipProtocol.Gossip.Message
 
             return builder.ToString();
         }
-
+        
     }
 
     /*

@@ -11,7 +11,7 @@ namespace GossipProtocol.Gossip
     {
         public void Initialize(IPipelines pipelines)
         {
-            GossipLoop.init();
+            GossipLoop.Init();
         }
     }
 }

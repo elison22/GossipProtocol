@@ -33,7 +33,7 @@ namespace GossipProtocol
 
             if (context.CurrentUser != null)
             {
-                GossipLoop.poke(context.CurrentUser.UserName);
+                GossipLoop.Poke(context.CurrentUser.UserName);
             }
 
 

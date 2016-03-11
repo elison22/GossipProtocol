@@ -27,13 +27,8 @@ namespace GossipProtocol.Modules
                 add it to the current user
                 */
                 PeerParams peerParams = this.Bind<PeerParams>();
-
-                Peer peer = new Peer
-                {
-                    Endpoint = peerParams.Endpoint
-                };
-
-                user.Neighbors.Add(peer);
+                
+                user.AddPeer(peerParams.Endpoint);
 
                 return Response.AsRedirect("/chat");
             };

@@ -6,7 +6,7 @@ using System.Web;
 
 namespace GossipProtocol.Gossip.Message
 {
-    public class RumorMessage : IComparable<RumorMessage>
+    public class RumorMessage : IComparable<RumorMessage> , IGossipMessage
     {
         public RumorMessage() { }
         public RumorMessage(string messageId, string originator, string text, string endpoint)
@@ -27,24 +27,25 @@ namespace GossipProtocol.Gossip.Message
         // Indirectly for Json as well
         public class OneRumor
         {
-            public MessageId fullId = new MessageId();
+            public MessageId FullId = new MessageId();
 
             //For Json to be happy
             public string MessageId
             {
                 get
                 {
-                    return fullId.id;
+                    return FullId.id;
                 }
                 set
                 {
-                    fullId.id = value;
+                    FullId.id = value;
                 }
             }
             public string Originator { get; set; }
             public string Text { get; set; }
         }
         
+
         public string ToJson()
         {
             StringBuilder builder = new StringBuilder();
@@ -70,6 +71,21 @@ namespace GossipProtocol.Gossip.Message
                 return 0;
             else return -1;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+            if (obj.GetType() != typeof(RumorMessage))
+                return false;
+            return Rumor.MessageId.Equals(((RumorMessage)obj).Rumor.MessageId);
+        }
+
+        public override int GetHashCode()
+        {
+            return Rumor.MessageId.GetHashCode();
+        }
+
     }
 
     /*
@@ -80,4 +96,5 @@ namespace GossipProtocol.Gossip.Message
          "EndPoint": "https://example.com/gossip/13244"                         URL of the node propagating the rumor
         }   
     */
+
 }

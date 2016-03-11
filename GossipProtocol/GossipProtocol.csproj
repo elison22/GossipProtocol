@@ -64,6 +64,7 @@
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -101,14 +102,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bookstrapper.cs" />
-    <Compile Include="Modules\GossipModule.cs" />
+    <Compile Include="Gossip\Message\IGossipMessage.cs" />
     <Compile Include="Gossip\GossipLoop.cs" />
     <Compile Include="Gossip\Message\MessageId.cs" />
     <Compile Include="Gossip\Message\RumorMessage.cs" />
     <Compile Include="Gossip\Message\WantMessage.cs" />
+    <Compile Include="Gossip\Sender.cs" />
     <Compile Include="Models\ErrorModel.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Modules\ChatModule.cs" />
+    <Compile Include="Modules\GossipModule.cs" />
     <Compile Include="Modules\MyNancyModule.cs" />
     <Compile Include="Modules\PeerModule.cs" />
     <Compile Include="Modules\CreateModule.cs" />

@@ -10,11 +10,11 @@ namespace GossipProtocol.Gossip.Message
         public MessageId(){}
         public MessageId(string origin, string sequence)
         {
-            this.origin = Guid.Parse(origin);
+            this.origin = origin;
             this.sequence = int.Parse(sequence);
         }
 
-        public Guid origin { get; set; }
+        public string origin { get; set; }
         public int sequence { get; set; }
 
         public string id
@@ -26,7 +26,7 @@ namespace GossipProtocol.Gossip.Message
             set
             {
                 string[] splitVals = value.Split(new char[] { ':' });
-                origin = Guid.Parse(splitVals[0]);
+                origin = splitVals[0];
                 sequence = int.Parse(splitVals[1]);
             }
         }

@@ -1,8 +1,11 @@
-﻿using GossipProtocol.Gossip.Message;
+﻿using GossipProtocol.Gossip;
+using GossipProtocol.Gossip.Message;
 using GossipProtocol.UserManagement;
 using Nancy;
+using Nancy.IO;
 using Nancy.ModelBinding;
 using Nancy.Security;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +30,7 @@ namespace GossipProtocol.Modules
                     return Response.AsRedirect("/peer/add");
 
                 // if so, get the messages for that user and display them
-                List<RumorMessage> messages = user.Messages;
+                List<RumorMessage> messages = user.MessageState.ReceivedMessages;
                 // TODO: do this once all of the model code is implemented
                 
                 return View["chat", makeView(messages)];
@@ -53,11 +56,14 @@ namespace GossipProtocol.Modules
                 return Response.AsRedirect("/chat");
             };
 
+            
+
         }
 
         private class MessageParams
         {
             public string Text { get; set; }
         }
+
     }
 }
