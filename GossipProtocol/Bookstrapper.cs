@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using GossipProtocol.Gossip;
+using GossipProtocol.Writing;
 
 namespace GossipProtocol
 {
@@ -22,6 +23,7 @@ namespace GossipProtocol
         protected override void RequestStartup(TinyIoCContainer container, IPipelines pipelines, NancyContext context)
         {
             base.RequestStartup(container, pipelines, context);
+            Write.WriteLine("In Bootstrapper.RequestStartup");
 
             var formsAuthConfiguration = new FormsAuthenticationConfiguration
             {
@@ -33,6 +35,7 @@ namespace GossipProtocol
 
             if (context.CurrentUser != null)
             {
+                Write.WriteLine("Poking from Bootstrapper.RequestStartup");
                 GossipLoop.Poke(context.CurrentUser.UserName);
             }
 

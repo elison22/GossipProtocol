@@ -106,7 +106,7 @@ namespace GossipProtocol.UserManagement
         public void addUser(User newUser)
         {
             users.Add(newUser);
-            writeUsers(persistenceDir, persistenceName);
+            //writeUsers(persistenceDir, persistenceName);
         }
 
         public void deleteUser(string username)

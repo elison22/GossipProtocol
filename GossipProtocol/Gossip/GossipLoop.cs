@@ -51,6 +51,7 @@ namespace GossipProtocol.Gossip
         {
             // stuff for debugging
             string message = "The Elapsed event was raised at " + E.SignalTime;
+            Console.WriteLine(message);
             Write.WriteLine(message);
 
             List<User> users = (

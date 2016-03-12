@@ -2,7 +2,6 @@
 using Nancy.ModelBinding;
 using Nancy.Authentication.Forms;
 using GossipProtocol.UserManagement;
-using GossipProtocol.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +26,10 @@ namespace GossipProtocol.Modules
 
             Get["/logout"] = _ =>
             {
+                User user = getCurUser();
+                if (user == null)
+                    return Response.AsRedirect("/home");
+                user.RemainingCycles = 0;
                 return this.LogoutAndRedirect("/home");
             };
         }
