@@ -14,18 +14,14 @@ namespace GossipProtocol.Modules
     {
         public SessionModule()
         {
-            Get["/login"] = _ => View["login_simple", makeView(UserManager.get().getUsers())];
+            Get["/login"] = _ => View["login", makeView(UserManager.get().getUsers())];
             Post["/login"] = _ =>
             {
                 LoginParams loginParams = this.Bind<LoginParams>();
                 User user = getUser(loginParams.Username);
                 if (user == null)
-                    return View["error", makeView(new ErrorModel
-                    {
-                        Message = loginParams.Username + " is not a valid user.",
-                        RedirectPage = "login",
-                        RedirectURL = "/login"
-                    })];
+                    return View["error", makeError(loginParams.Username + " is not a valid user.", "login", "/login")];
+
                 return this.LoginAndRedirect(user.Id, fallbackRedirectUrl: "/chat");
             };
 

@@ -1,10 +1,15 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <title></title>
 	<meta charset="utf-8" />
 </head>
-<body>
+<body>    
+    @Each.Data
+    <h4>
+        @Current.FirstName @Current.LastName (@Current.UserName) [@Current.Endpoint]
+    </h4>
+    @EndEach
     <section class="container">
         <div class="login">
             <h3>Login</h3>

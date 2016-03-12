@@ -10,7 +10,7 @@ namespace GossipProtocol.Gossip.Message
     {
         public WantMessage()
         {
-            WantList = new List<MessageId>();
+            //WantList = new List<MessageId>();
         }
         public List<MessageId> WantList { get; set; }
 
@@ -35,15 +35,16 @@ namespace GossipProtocol.Gossip.Message
             builder.Append("{\"Want\": {");
             bool contains1 = false;
 
-            foreach(MessageId mi in WantList)
-            {
-                contains1 = true;
-                builder.Append("\"");
-                builder.Append(mi.origin.ToString());
-                builder.Append("\": ");
-                builder.Append(mi.sequence.ToString());
-                builder.Append(",\n");
-            }
+            if(WantList != null)
+                foreach(MessageId mi in WantList)
+                {
+                    contains1 = true;
+                    builder.Append("\"");
+                    builder.Append(mi.origin.ToString());
+                    builder.Append("\": ");
+                    builder.Append(mi.sequence.ToString());
+                    builder.Append(",\n");
+                }
 
             if(contains1)
                 builder.Remove(builder.Length - 2, 2);
@@ -53,7 +54,13 @@ namespace GossipProtocol.Gossip.Message
 
             return builder.ToString();
         }
-        
+
+        public void AddWant(MessageId messageId)
+        {
+            if (WantList == null)
+                WantList = new List<MessageId>();
+            WantList.Add(messageId);
+        }
     }
 
     /*

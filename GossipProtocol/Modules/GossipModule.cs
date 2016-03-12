@@ -21,10 +21,10 @@ namespace GossipProtocol.Modules
                 User user = UserManager.get().getShortUser(_.id);
                 if (user == null)
                 {
-                    HeadResponse response = new HeadResponse(Response.Context.Response);
-                    response.StatusCode = HttpStatusCode.BadRequest;
-                    response.ReasonPhrase = _.id + " is not a valid user at this endpoint.";
-                    return response;
+                    //HeadResponse response = new HeadResponse(Response.Context.Response);
+                    //response.StatusCode = HttpStatusCode.BadRequest;
+                    //response.ReasonPhrase = _.id + " is not a valid user at this endpoint.";
+                    return HttpStatusCode.BadRequest;
                 }
 
                 RequestStream requestStream = Request.Body;
@@ -66,10 +66,10 @@ namespace GossipProtocol.Modules
                 }
                 else
                 {
-                    HeadResponse response = new HeadResponse(Response.Context.Response);
-                    response.StatusCode = HttpStatusCode.BadRequest;
-                    response.ReasonPhrase = "The following is not a valid request body:\n" + requestBody;
-                    return response;
+                    //HeadResponse response = new HeadResponse(Response.Context.Response);
+                    //response.StatusCode = HttpStatusCode.BadRequest;
+                    //response.ReasonPhrase = "The following is not a valid request body:\n" + requestBody;
+                    return HttpStatusCode.BadRequest;
                 }
 
                 // this is the endpoint that external nodes will use

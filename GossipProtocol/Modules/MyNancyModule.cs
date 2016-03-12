@@ -36,5 +36,15 @@ namespace GossipProtocol.Modules
             return new ViewModel(Context, data, condition);
         }
 
+        protected ViewModel makeError(string Message, string RedirectPage, string RedirectURL)
+        {
+            return makeView(new ErrorModel
+            {
+                Message = Message,
+                RedirectPage = RedirectPage,
+                RedirectURL = RedirectURL
+            });
+        }
+
     }
 }

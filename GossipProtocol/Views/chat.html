@@ -1,28 +1,42 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <title></title>
     <meta charset="utf-8" />
 </head>
 <body>
-    <section class="container">
-        <div class="chatroom">
-            <h3>Chat Room</h3>
-                <form action="http://google.com">
-                    <input type="submit" value="Logout" style="margin-bottom: 10px">
-                </form>
-                <form action="http://google.com">
-                    <input type="submit" value="Refresh" style="margin-bottom: 10px">
-                </form>
-                <form action="http://google.com">
-                    <input type="submit" value="Leave Room" style="margin-bottom: 10px">
-                </form>
-                <form action="http://google.com">
-                    <textarea rows="4" cols="50" placeholder="some random text">
-                    </textarea>
-                    <input type="submit" value="Submit" style="margin-bottom: 10px">
-                </form>
-        </div>
-    </section>
+    <h4></h4>
+    <div>
+        <form method="get" action="/logout" style="float:left">
+            <input type="submit" value="Logout" style="margin-bottom: 10px"> 
+        </form>
+        <form method="get" action="/chat">
+            <input type="submit" value="Refresh" style="margin-bottom: 10px">
+        </form>
+    </div>        
+        
+    <h2>Chat Room</h2>
+    <div>
+        @Each.Data.MessageState.ReceivedMessages
+        <h3>@Current.Rumor.Originator</h3>
+        @Current.Rumor.Text
+        @EndEach
+        <h5></h5>
+        <form method="post" action="/chat/new">
+            <textarea rows="4" cols="50" name="Text" placeholder="New message..."></textarea><br>
+            <input type="submit" value="Submit" style="margin-bottom: 10px">
+        </form>
+    </div>
+
+    <h2>Peer List</h2>
+    <div>
+    @Each.Data.Neighbors
+        <form method="post" action="/peer/delete">
+            <input type="text" hidden="hidden" value="@Current.Endpoint">
+            @Current.Endpoint <input type="submit" value="Delete" style="margin-bottom: 10px">
+        </form>
+    @EndEach
+    </div>
+
 </body>
 </html>

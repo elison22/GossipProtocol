@@ -21,11 +21,7 @@ namespace GossipProtocol.Modules
             Post["/peer/add"] = _ =>
             {
                 User user = getCurUser();
-                /*
-                bind to the form fields
-                create a peer
-                add it to the current user
-                */
+
                 PeerParams peerParams = this.Bind<PeerParams>();
                 
                 user.AddPeer(peerParams.Endpoint);
@@ -33,12 +29,19 @@ namespace GossipProtocol.Modules
                 return Response.AsRedirect("/chat");
             };
 
+            // ========= STILL =========
             // TODO: Finish this one!!!!
             Post["/peer/delete"] = _ =>
             {
                 User user = getCurUser();
-                //user.neighbors.Remove("FILL IN THE WAY TO REMOVE NEIGHBORS");
 
+                PeerParams peerParams = this.Bind<PeerParams>();
+
+                if (!user.Neighbors.Contains(new Peer { Endpoint = peerParams.Endpoint }))
+                {
+                    return HttpStatusCode.BadRequest;
+                }
+                
                 return Response.AsRedirect("/chat");
             };
             

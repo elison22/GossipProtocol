@@ -30,10 +30,10 @@ namespace GossipProtocol.Modules
                     return Response.AsRedirect("/peer/add");
 
                 // if so, get the messages for that user and display them
-                List<RumorMessage> messages = user.MessageState.ReceivedMessages;
+                // List<RumorMessage> messages = user.MessageState.ReceivedMessages;
                 // TODO: do this once all of the model code is implemented
                 
-                return View["chat", makeView(messages)];
+                return View["chat", makeView(user)];
             };
 
             Post["/chat/new"] = _ =>
@@ -46,18 +46,15 @@ namespace GossipProtocol.Modules
                 if (user.Neighbors.Count == 0)
                     return Response.AsRedirect("/peer/add");
 
-                // add this message to the current list of messages
                 // bind the form elements
                 MessageParams messageParams = this.Bind<MessageParams>();
 
-
-                // TODO: implement this once the model code is completed
+                // add this message to the current list of messages
+                user.MessageState.AddMyMessage(user.Id, user.FirstName, messageParams.Text, user.Endpoint);
 
                 return Response.AsRedirect("/chat");
             };
-
             
-
         }
 
         private class MessageParams

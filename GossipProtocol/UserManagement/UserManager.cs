@@ -19,6 +19,24 @@ namespace GossipProtocol.UserManagement
         private UserManager()
         {
             users = new List<User>();
+            //{
+            //    new User
+            //    {
+            //        FirstName = "Brandt",
+            //        LastName = "Elison",
+            //        UserName = "elison22",
+            //        Id = Guid.Parse("ea97d002-619e-4460-a0f1-ab9914f27aaa"),
+            //    },
+            //    new User
+            //    {
+            //        FirstName = "Katrina",
+            //        LastName = "Elison",
+            //        UserName = "kdog0128",
+            //        Id = Guid.Parse("ea97d002-619e-4460-a0f1-ab9914f27bbb")
+            //    }
+            //};
+            //User user = getUser("elison22");
+            //user.MessageState.AddMyMessage(user.Id, user.FirstName, "Brandt's first message.", user.Endpoint);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -75,7 +93,7 @@ namespace GossipProtocol.UserManagement
         {
             return (
                 from u in users
-                where u.ShortId == ShortId
+                where u.ShortId.ToUpper() == ShortId.ToUpper()
                 select u).FirstOrDefault();
         }
 

@@ -8,6 +8,7 @@ namespace GossipProtocol.Gossip
     public class Peer : IComparable<Peer>
     {
         public string Endpoint { get; set; }
+        public string PeerName { get; set; }
 
         public int CompareTo(Peer other)
         {

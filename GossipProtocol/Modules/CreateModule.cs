@@ -13,17 +13,12 @@ namespace GossipProtocol.Modules
     {
         public CreateModule()
         {
-            Get["/create"] = _ => View["create", new ViewModel(Context, null)];
+            Get["/create"] = _ => View["create", makeView(null)];
             Post["/create"] = _ =>
             {
                 CreateParams createParams = this.Bind<CreateParams>();
                 if (UserManager.get().getUser(createParams.Username) != null)
-                    return View["/error", makeView(new ErrorModel
-                    {
-                        Message = "A user with this username already exists.",
-                        RedirectPage = "Create User",
-                        RedirectURL = "/create"
-                    })];
+                    return View["error", makeError("A user with this username already exists.", "Create User", "/create")];
                 
                 User newUser = buildUser(createParams);
                 UserManager.get().addUser(newUser);

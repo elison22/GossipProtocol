@@ -8,14 +8,26 @@
     <section class="container">
         <div class="peer.add">
             <h3>Add Peer</h3>
-            <form method="post">
-                <p><input type="text" name="PeerName" value="" placeholder="Peer Name"></p>
+            <form method="post" action="/peer/add">
                 <p><input type="text" name="Endpoint" value="" placeholder="Endpoint"></p>
+                <p class="submit"><input type="submit" name="commit" value="Add Peer"></p>
             </form>
-            <form action="http://google.com">
+            <!--
+            <form action="/peer/add">
                 <input type="submit" value="Add Peer">
             </form> 
+            -->
         </div>
     </section>
+    @If.Data.HasNeighbors
+    <h3>
+        Current Neighbors
+    </h3>
+    @EndIf
+    @Each.Data.Neighbors
+    <h4>
+        @Current.Endpoint
+    </h4>
+    @EndEach
 </body>
 </html>

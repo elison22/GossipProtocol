@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Nancy.Security;
 
 namespace GossipProtocol.Modules
 {
@@ -13,45 +14,43 @@ namespace GossipProtocol.Modules
     {
         public UserModule()
         {
-            Get["/user/delete/{username}"] = _ =>
-            {
-                User toDelete = UserManager.get().getUser((string)_.username);
+            this.RequiresAuthentication();
 
-                // if it's not a valid user, go back home
-                if (toDelete == null)
-                    return View["home", new ViewModel(this.Context, null)];
+            Get["/user/delete"] = _ =>
+            {
+                User toDelete = getCurUser();
 
                 // if user is logged in, logout
-                if (this.Context.CurrentUser != null &&
-                    toDelete.UserName == this.Context.CurrentUser.UserName)
+                if (Context.CurrentUser != null &&
+                    toDelete.UserName == Context.CurrentUser.UserName)
                     this.LogoutWithoutRedirect();
 
-                UserManager.get().deleteUser(_.username);
-                return View["home", new ViewModel(this.Context, null)];
+                UserManager.get().deleteUser(toDelete.UserName);
+                return Response.AsRedirect("/home");
             };
 
-            Get["/user/{username}"] = _ =>
+            Get["/user/setid/{id}"] = _ =>
             {
-                User selected = UserManager.get().getUser((string)_.username);
-                
-                // if it's not a valid user, go back home
-                if (selected == null)
-                    return View["error", new ErrorModel
-                    {
-                        Message = (string)_.username + " is not a valid user.",
-                        RedirectPage = "home",
-                        RedirectURL = "/home"
-                    }];
+                string newId = (string)_.id;
 
-                // if user is logged in, go to the account page
-                if (this.Context.CurrentUser != null &&
-                    selected.UserName == this.Context.CurrentUser.UserName)
-                    return Response.AsRedirect("/account");
+                User user = getCurUser();
 
-                // ==== something
+                string oldFullId = user.Id.ToString();
+                string oldPartId = oldFullId.Substring(0, 24);
 
-                return View["user_adv"/*, new ViewModel(this.Context, checkins)*/];
+                string newFullId = oldPartId + newId;
+
+                try
+                {
+                    user.Id = Guid.Parse(newFullId);
+                } catch (FormatException e)
+                {
+                    return View["error", makeError(newId + " must be 12 hex characters.", "home", "/home")];
+                }
+
+                return Response.AsRedirect("/home");
             };
+
         }
 
         private long ConvertToUnixTimestamp(DateTime date)

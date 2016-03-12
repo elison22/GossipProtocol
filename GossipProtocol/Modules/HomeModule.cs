@@ -1,6 +1,7 @@
 ﻿using Nancy;
 using GossipProtocol.Models;
 using GossipProtocol.UserManagement;
+using GossipProtocol.Writing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace GossipProtocol.Modules
             Get["/"] = _ => Response.AsRedirect("/home");
             Get["/home"] = _ =>
             {
-                Console.WriteLine("\nWelcome to the home page!");
+                Write.WriteLine("\nWelcome to the home page!");
 
                 if (loggedIn())
                     return Response.AsRedirect("/chat");
@@ -23,8 +24,6 @@ namespace GossipProtocol.Modules
                 return View["home"];
             };
         }
-
-        
         
     }
 }

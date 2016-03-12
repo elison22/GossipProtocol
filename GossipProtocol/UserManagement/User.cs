@@ -15,14 +15,14 @@ namespace GossipProtocol.UserManagement
             Neighbors = new List<Peer>();
             MessageState = new State();
             Id = Guid.NewGuid();
-            defaultStartingCycles = 180;
+            DefaultStartingCycles = 180;
             ResetRemainingCycles();
         }
 
         // Inner versions of the vars below that make Nancy happy
         private List<string> UserClaims = new List<string>();
         private string Username { get; set; }
-        private int defaultStartingCycles;
+        private int DefaultStartingCycles;
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -71,7 +71,7 @@ namespace GossipProtocol.UserManagement
         }
         public void ResetRemainingCycles()
         {
-            RemainingCycles = defaultStartingCycles;
+            RemainingCycles = DefaultStartingCycles;
         }
         public bool DecCycles()
         {

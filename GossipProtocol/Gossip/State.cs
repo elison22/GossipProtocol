@@ -73,7 +73,7 @@ namespace GossipProtocol.Gossip
                     orderby rm.Rumor.FullId.sequence descending
                     select rm.Rumor.FullId).ToList();
 
-                want.WantList.Add(groupedMessages[0]);
+                want.AddWant(groupedMessages[0]);
             }
 
             return want;
@@ -123,7 +123,7 @@ namespace GossipProtocol.Gossip
                 where !fromWantOrigins.Contains(rm.Rumor.FullId.origin) ||
                 rm.Rumor.FullId.sequence > (
                     from fw in fromWant
-                    where fw.id == rm.Rumor.FullId.id
+                    where fw.origin == rm.Rumor.FullId.origin
                     select fw).FirstOrDefault().sequence
                 select rm).ToList();
 
