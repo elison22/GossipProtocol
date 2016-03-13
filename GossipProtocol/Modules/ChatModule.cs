@@ -26,8 +26,8 @@ namespace GossipProtocol.Modules
 
                 // Check if the user has a peer yet
                 // if not, go to the add a peer page
-                if (user.Neighbors.Count == 0)
-                    return Response.AsRedirect("/peer/add");
+                //if (user.Neighbors.Count == 0)
+                //    return Response.AsRedirect("/peer/add");
 
                 // if so, get the messages for that user and display them
                 // List<RumorMessage> messages = user.MessageState.ReceivedMessages;

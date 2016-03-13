@@ -23,6 +23,5 @@ C:\Users\Brandt\Dropbox\ClassesCurrent\CS462\proj5\GossipProtocol\GossipProtocol
 C:\Users\Brandt\Dropbox\ClassesCurrent\CS462\proj5\GossipProtocol\GossipProtocol\bin\Nancy.Authentication.Forms.xml
 C:\Users\Brandt\Dropbox\ClassesCurrent\CS462\proj5\GossipProtocol\GossipProtocol\bin\Nancy.Hosting.Aspnet.xml
 C:\Users\Brandt\Dropbox\ClassesCurrent\CS462\proj5\GossipProtocol\GossipProtocol\bin\Newtonsoft.Json.xml
-C:\Users\Brandt\Dropbox\ClassesCurrent\CS462\proj5\GossipProtocol\GossipProtocol\obj\Debug\GossipProtocol.csprojResolveAssemblyReference.cache
 C:\Users\Brandt\Dropbox\ClassesCurrent\CS462\proj5\GossipProtocol\GossipProtocol\obj\Debug\GossipProtocol.dll
 C:\Users\Brandt\Dropbox\ClassesCurrent\CS462\proj5\GossipProtocol\GossipProtocol\obj\Debug\GossipProtocol.pdb

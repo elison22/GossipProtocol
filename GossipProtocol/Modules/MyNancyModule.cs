@@ -1,5 +1,7 @@
-﻿using GossipProtocol.Models;
+﻿using GossipProtocol.Gossip;
+using GossipProtocol.Models;
 using GossipProtocol.UserManagement;
+using GossipProtocol.Writing;
 using Nancy;
 using System;
 using System.Collections.Generic;
@@ -28,7 +30,16 @@ namespace GossipProtocol.Modules
 
         protected User getCurUser()
         {
-            return getUser(Context.CurrentUser.UserName);
+            User curUser = getUser(Context.CurrentUser.UserName);
+
+            if (curUser != null)
+            {
+                curUser.ResetRemainingCycles();
+                Write.WriteLine("Poking from Bootstrapper.RequestStartup");
+                GossipLoop.Poke(Context.CurrentUser.UserName);
+            }
+
+            return curUser;
         }
 
         protected ViewModel makeView(object data, bool condition = true)

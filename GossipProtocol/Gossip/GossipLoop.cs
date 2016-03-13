@@ -27,7 +27,7 @@ namespace GossipProtocol.Gossip
             LoopTimer.Elapsed += OnTimedEvent;
 
             // Have the timer fire repeated events (true is the default)
-            LoopTimer.AutoReset = true;
+            //LoopTimer.AutoReset = true;
 
             // mark as initialized
             Initialized = true;
@@ -42,8 +42,8 @@ namespace GossipProtocol.Gossip
             if (user == null)
                 return;
 
-            user.ResetRemainingCycles();
-            LoopTimer.Enabled = true;
+            LoopTimer.Start();
+            //LoopTimer.Enabled = true;
         }
 
 
@@ -51,7 +51,6 @@ namespace GossipProtocol.Gossip
         {
             // stuff for debugging
             string message = "The Elapsed event was raised at " + E.SignalTime;
-            Console.WriteLine(message);
             Write.WriteLine(message);
 
             List<User> users = (
@@ -59,22 +58,26 @@ namespace GossipProtocol.Gossip
                 where u.RemainingCycles > 0
                 select u).ToList();
 
+            Write.WriteLine("Loop discovered " + users.Count + " users");
             if (users.Count == 0)
             {
                 Write.WriteLine("No active users");
-                LoopTimer.Enabled = false;
+                //LoopTimer.Enabled = false;
+                LoopTimer.Stop();
             }
 
             foreach(User u in users)
             {
                 Write.WriteLine("User " + u.FirstName + " has " + u.RemainingCycles + " remaining cycles");
+
+                u.DecCycles();
                 if (u.Neighbors == null || u.Neighbors.Count == 0)
                     continue;
                 Peer randNeigbor = u.Neighbors[Rand.Next(u.Neighbors.Count)];
 
                 int messageType = Rand.Next(2);
                 
-                if(messageType == 0)
+                if (messageType == 0)
                 {
                     SentRumor(randNeigbor, u);
                 }
@@ -83,7 +86,7 @@ namespace GossipProtocol.Gossip
                     SendWant(randNeigbor, u);
                 }
                 
-                u.DecCycles();
+                
             }
         }
 

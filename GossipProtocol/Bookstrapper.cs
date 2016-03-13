@@ -32,12 +32,12 @@ namespace GossipProtocol
             };
 
             FormsAuthentication.Enable(pipelines, formsAuthConfiguration);
-
-            if (context.CurrentUser != null)
-            {
-                Write.WriteLine("Poking from Bootstrapper.RequestStartup");
-                GossipLoop.Poke(context.CurrentUser.UserName);
-            }
+            
+            //if (context.CurrentUser != null)
+            //{
+            //    Write.WriteLine("Poking from Bootstrapper.RequestStartup");
+            //    GossipLoop.Poke(context.CurrentUser.UserName);
+            //}
 
 
         }

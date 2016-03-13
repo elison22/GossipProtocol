@@ -17,7 +17,7 @@ namespace GossipProtocol.Modules
         {
             this.RequiresAuthentication();
 
-            Get["/peer/add"] = _ => View["peer_add"];
+            Get["/peer/add"] = _ => View["peer_add", makeView(getCurUser())];
             Post["/peer/add"] = _ =>
             {
                 User user = getCurUser();

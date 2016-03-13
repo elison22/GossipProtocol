@@ -23,7 +23,7 @@ namespace GossipProtocol.Modules
                 User newUser = buildUser(createParams);
                 UserManager.get().addUser(newUser);
 
-                return this.LoginAndRedirect(newUser.Id, fallbackRedirectUrl:"/chat");
+                return this.LoginAndRedirect(newUser.Id, fallbackRedirectUrl:"/peer/add");
             };
         }
 

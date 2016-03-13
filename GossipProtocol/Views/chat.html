@@ -15,6 +15,8 @@
         </form>
     </div>        
         
+    <h3>Your endpoint: @Model.Data.Endpoint</h3>
+
     <h2>Chat Room</h2>
     <div>
         @Each.Data.MessageState.ReceivedMessages
@@ -28,6 +30,9 @@
         </form>
     </div>
 
+    <form method="get" action="/peer/add">
+        <input type="submit" value="Add Peer" style="margin-bottom: 10px">
+    </form>
     <h2>Peer List</h2>
     <div>
     @Each.Data.Neighbors
