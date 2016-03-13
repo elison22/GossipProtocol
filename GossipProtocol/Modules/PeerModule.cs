@@ -43,6 +43,8 @@ namespace GossipProtocol.Modules
                     return View["error", makeError("You do not have a peer with the following endpoint:\n" + peerParams.Endpoint, "chat", "/chat")];
                 }
 
+                user.RemovePeer(toRemove);
+
                 return Response.AsRedirect("/chat");
             };
             

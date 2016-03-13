@@ -37,7 +37,7 @@
     <div>
     @Each.Data.Neighbors
         <form method="post" action="/peer/delete">
-            <input type="text" hidden="hidden" value="@Current.Endpoint">
+            <input type="text" name="Endpoint" hidden="hidden" value="@Current.Endpoint">
             @Current.Endpoint <input type="submit" value="Delete" style="margin-bottom: 10px">
         </form>
     @EndEach

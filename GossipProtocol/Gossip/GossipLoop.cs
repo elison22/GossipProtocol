@@ -101,6 +101,7 @@ namespace GossipProtocol.Gossip
             if (rumor == null)
             {
                 SendWant(Neighbor, Me);
+                return;
             }
 
             rumor.EndPoint = Me.Endpoint;

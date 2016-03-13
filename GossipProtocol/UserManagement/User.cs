@@ -87,9 +87,10 @@ namespace GossipProtocol.UserManagement
             Neighbors.Add(newPeer);
             MessageState.SentMessages.Add(newPeer, new List<MessageId>());
         }
-        public void RemovePeer()
+        public void RemovePeer(Peer toRemove)
         {
-
+            Neighbors.Remove(toRemove);
+            MessageState.SentMessages.Remove(toRemove);
         }
 
     }
