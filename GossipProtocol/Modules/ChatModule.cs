@@ -43,8 +43,8 @@ namespace GossipProtocol.Modules
 
                 // Check if the user has a peer yet
                 // if not, go to the add a peer page
-                if (user.Neighbors.Count == 0)
-                    return Response.AsRedirect("/peer/add");
+                //if (user.Neighbors.Count == 0)
+                //    return Response.AsRedirect("/peer/add");
 
                 // bind the form elements
                 MessageParams messageParams = this.Bind<MessageParams>();
