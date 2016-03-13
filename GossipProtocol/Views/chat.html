@@ -21,7 +21,7 @@
     <div>
         @Each.Data.MessageState.ReceivedMessages
         <strong>@Current.Rumor.Originator </strong> @Current.ReceivedString<br>
-        @Current.Rumor.Text
+        @Current.Rumor.Text<br>
         @EndEach
         <h5></h5>
         <form method="post" action="/chat/new">
