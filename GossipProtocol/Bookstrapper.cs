@@ -23,7 +23,7 @@ namespace GossipProtocol
         protected override void RequestStartup(TinyIoCContainer container, IPipelines pipelines, NancyContext context)
         {
             base.RequestStartup(container, pipelines, context);
-            Write.WriteLine("In Bootstrapper.RequestStartup");
+            //Write.WriteLine("In Bootstrapper.RequestStartup");
 
             var formsAuthConfiguration = new FormsAuthenticationConfiguration
             {
