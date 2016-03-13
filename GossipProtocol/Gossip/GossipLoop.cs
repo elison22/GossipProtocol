@@ -85,8 +85,6 @@ namespace GossipProtocol.Gossip
                 {
                     SendWant(randNeigbor, u);
                 }
-                
-                
             }
         }
 

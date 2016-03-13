@@ -36,12 +36,13 @@ namespace GossipProtocol.Modules
                 User user = getCurUser();
 
                 PeerParams peerParams = this.Bind<PeerParams>();
+                Peer toRemove = new Peer { Endpoint = peerParams.Endpoint };
 
-                if (!user.Neighbors.Contains(new Peer { Endpoint = peerParams.Endpoint }))
+                if (!user.Neighbors.Contains(toRemove))
                 {
-                    return HttpStatusCode.BadRequest;
+                    return View["error", makeError("You do not have a peer with the following endpoint:\n" + peerParams.Endpoint, "chat", "/chat")];
                 }
-                
+
                 return Response.AsRedirect("/chat");
             };
             

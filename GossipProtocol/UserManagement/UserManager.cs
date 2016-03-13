@@ -44,13 +44,13 @@ namespace GossipProtocol.UserManagement
         {
             if (instance == null)
             {
-                Console.WriteLine("\nInstantiating UserManager");
+                //Console.WriteLine("\nInstantiating UserManager");
                 instance = new UserManager();
             }
-            else
-            {
-                Console.WriteLine("\nUsing the existing UserManager with " + users.Count + " Users");
-            }
+            //else
+            //{
+            //    Console.WriteLine("\nUsing the existing UserManager with " + users.Count + " Users");
+            //}
             return instance;
         }
         

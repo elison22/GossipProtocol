@@ -20,7 +20,7 @@
     <h2>Chat Room</h2>
     <div>
         @Each.Data.MessageState.ReceivedMessages
-        <h3>@Current.Rumor.Originator</h3>
+        <strong>@Current.Rumor.Originator </strong> @Current.ReceivedString<br>
         @Current.Rumor.Text
         @EndEach
         <h5></h5>

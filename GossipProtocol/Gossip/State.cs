@@ -26,6 +26,7 @@ namespace GossipProtocol.Gossip
         {
             if (ReceivedMessages.Contains(message))
                 return;
+            message.ReceivedStamp = DateTime.Now;
             ReceivedMessages.Add(message);
         }
 
@@ -33,6 +34,7 @@ namespace GossipProtocol.Gossip
         {
             string messageId = id.ToString() + ":" + sequence;
             RumorMessage newMessage = new RumorMessage(messageId, originator, text, endpoint);
+            newMessage.ReceivedStamp = DateTime.Now;
             ReceivedMessages.Add(newMessage);
         }
 

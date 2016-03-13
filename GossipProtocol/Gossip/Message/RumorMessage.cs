@@ -44,7 +44,16 @@ namespace GossipProtocol.Gossip.Message
             public string Originator { get; set; }
             public string Text { get; set; }
         }
-        
+
+        // Other properties
+        public DateTime ReceivedStamp { get; set; }
+        public string ReceivedString
+        {
+            get
+            {
+                return ReceivedStamp.ToString("G");
+            }
+        }
 
         public string ToJson()
         {
@@ -87,14 +96,5 @@ namespace GossipProtocol.Gossip.Message
         }
 
     }
-
-    /*
-        {"Rumor" : {"MessageID": "ABCD-1234-ABCD-1234-ABCD-1234:5" ,            a string containing the unique ID for this message as described above
-                    "Originator": "Phil",                                       a string giving the name of the server (or user)
-                    "Text": "Hello World!"                                      a string containing the actual message
-                    },
-         "EndPoint": "https://example.com/gossip/13244"                         URL of the node propagating the rumor
-        }   
-    */
 
 }

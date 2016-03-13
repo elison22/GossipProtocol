@@ -1,5 +1,6 @@
 ﻿using GossipProtocol.Gossip.Message;
 using GossipProtocol.UserManagement;
+using GossipProtocol.Writing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,14 @@ namespace GossipProtocol.Gossip
         public static bool SendMessage(string TargetUrl, IGossipMessage Message)
         {
             Task<bool> task = Task.Run(async () => { return await MakeAsyncRequest(TargetUrl, Message.ToJson()); });
-            task.Wait();
+            try
+            {
+                task.Wait();
+            }
+            catch
+            {
+                Write.WriteLine("Error sending message. Probably from a bad endpoint.");
+            }
             return task.Result;
         }
 
