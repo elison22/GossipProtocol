@@ -91,10 +91,10 @@ namespace GossipProtocol.Modules
                 return HttpStatusCode.OK;
             };
 
-            Get["/timer/{miliseconds}"] = _ =>
+            Get["/timer/{milliseconds}"] = _ =>
             {
-                int repeatMiliSeconds = (int)_.miliseconds;
-                GossipLoop.ChangeLoopTime(repeatMiliSeconds);
+                int repeatMilliSeconds = (int)_.milliseconds;
+                GossipLoop.ChangeLoopTime(repeatMilliSeconds);
 
                 return null;
             };
