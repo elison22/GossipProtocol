@@ -46,6 +46,11 @@ namespace GossipProtocol.Gossip
             //LoopTimer.Enabled = true;
         }
 
+        public static void ChangeLoopTime(int newLoopTime)
+        {
+            LoopTimer.Interval = newLoopTime;
+        }
+
 
         private static void OnTimedEvent(object Source, ElapsedEventArgs E)
         {
