@@ -28,9 +28,7 @@ namespace GossipProtocol.Modules
 
                 return Response.AsRedirect("/chat");
             };
-
-            // ========= STILL =========
-            // TODO: Finish this one!!!!
+            
             Post["/peer/delete"] = _ =>
             {
                 User user = getCurUser();

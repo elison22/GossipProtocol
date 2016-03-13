@@ -30,9 +30,6 @@
         </form>
     </div>
 
-    <form method="get" action="/peer/add">
-        <input type="submit" value="Add Peer" style="margin-bottom: 10px">
-    </form>
     <h2>Peer List</h2>
     <div>
     @Each.Data.Neighbors
@@ -42,6 +39,9 @@
         </form>
     @EndEach
     </div>
+    <form method="get" action="/peer/add">
+        <input type="submit" value="Add Peer" style="margin-bottom: 10px">
+    </form>
 
 </body>
 </html>

@@ -19,12 +19,13 @@ namespace GossipProtocol.Gossip
             try
             {
                 task.Wait();
+                return task.Result;
             }
             catch
             {
                 Write.WriteLine("Error sending message. Probably from a bad endpoint.");
+                return false;
             }
-            return task.Result;
         }
 
         private static async Task<bool> MakeAsyncRequest(string Url, string Data)
